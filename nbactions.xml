@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-wildfly:run</actionName>
+            <displayName>wildfly:run</displayName>
+            <goals>
+                <goal>wildfly:run</goal>
+            </goals>
+        </action>
+        <action>
+            <actionName>CUSTOM-clean install run</actionName>
+            <displayName>clean install run</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>install</goal>
+                <goal>wildfly:run</goal>
+            </goals>
+        </action>
+    </actions>
