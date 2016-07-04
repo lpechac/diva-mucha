@@ -11,7 +11,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.source>1.8</maven.compiler.source>
-        <wildfly.plugin.version>1.1.0.Alpha9</wildfly.plugin.version>
+        <wildfly.plugin.version.alpha>1.1.0.Alpha10</wildfly.plugin.version.alpha>
+        <wildfly.plugin.version>1.0.2.Final</wildfly.plugin.version>
         <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
     
@@ -30,7 +31,10 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>${wildfly.plugin.version}</version>
+                <version>${wildfly.plugin.version.alpha}</version>
+                <configuration>
+                    <javaOpts>-Djboss.http.port=8081</javaOpts>
+                </configuration>
             </plugin>
         </plugins>
     </build>
