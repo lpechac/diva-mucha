@@ -1,10 +1,21 @@
 package org.diva.mucha.model;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 @XmlRootElement
-public class Greeting {
+@Entity
+public class Greeting implements Serializable {
     
+    @Id
+    @XmlTransient
+    private String id;
+    
+    @Column(length = 100, nullable = true)
     private String hi;
 
     public Greeting() {
@@ -20,5 +31,13 @@ public class Greeting {
 
     public void setHi(String hi) {
         this.hi = hi;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

@@ -1,21 +1,28 @@
 package org.diva.mucha.services;
 
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Inject;
+import java.util.UUID;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.diva.mucha.model.Greeting;
 
-@ApplicationScoped
+@Stateless
 public class PersistenceService {
-
-    @Inject
-    private XmlService serializer;
+    
+    @PersistenceContext(unitName = "diva-mucha-test-ds")
+    private EntityManager em;
     
     public Greeting save(Greeting greeting) {
-        String xml = serializer.toXml(greeting);
-        throw new RuntimeException("Not yet implemented");
+        if (greeting.getId() == null) {
+            greeting.setId(UUID.randomUUID().toString());
+            em.persist(greeting);
+        } else {
+            em.merge(greeting);
+        }
+        return read(greeting.getId());
     }
     
-    public Greeting read(Greeting greeting) {
-        throw new RuntimeException("Not yet implemented");
+    public Greeting read(String id) {
+        return em.find(Greeting.class, id);
     }
 }
