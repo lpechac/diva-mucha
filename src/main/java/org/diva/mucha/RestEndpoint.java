@@ -1,9 +1,9 @@
 package org.diva.mucha;
 
-import java.util.List;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -15,6 +15,8 @@ import org.diva.mucha.model.Greeting;
 @Path("/")
 public class RestEndpoint {
     
+    private static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
+
     @Inject
     PersistenceService persistenceService;
 
@@ -23,9 +25,9 @@ public class RestEndpoint {
     @Produces(MediaType.APPLICATION_JSON)
     public Response hello() {
         Greeting greeting = new Greeting("hello");
-        return Response.ok(greeting).build();   
+        return Response.ok(greeting).build();
     }
-    
+
     @POST
     @Path("save")
     @Produces(MediaType.APPLICATION_JSON)
@@ -33,11 +35,14 @@ public class RestEndpoint {
         Greeting saved = persistenceService.save(greeting);
         return Response.ok(saved).build();
     }
-    
+
     @GET
     @Path("list")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Greeting> list() {
-        return persistenceService.list();
+    public Response list(@HeaderParam("Origin") String origin) {
+        return Response.ok(persistenceService.list())
+                .header(ACCESS_CONTROL_ALLOW_ORIGIN, origin)
+                .build();
     }
+    
 }
