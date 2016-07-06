@@ -1,5 +1,6 @@
 package org.diva.mucha;
 
+import java.util.List;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.GET;
@@ -31,5 +32,12 @@ public class RestEndpoint {
     public Response save(@Valid Greeting greeting) {
         Greeting saved = persistenceService.save(greeting);
         return Response.ok(saved).build();
+    }
+    
+    @GET
+    @Path("list")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Greeting> list() {
+        return persistenceService.list();
     }
 }
